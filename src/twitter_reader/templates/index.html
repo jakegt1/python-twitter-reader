@@ -1,10 +1,20 @@
 {% extends "pre_index.html" %}
 {% block tweets %}
-	<ul>
+	<ul class="list-group">
 		{% for tweet in tweet_list %}
-		<li>
-			{{tweet.user.username}}
-		</li>
+		<div class="list-group-item panel panel-default">
+			<div class="panel-heading">
+				<img src="{{tweet.user.profile_image}}"/>
+				{{tweet.user.name}} <a href="{{tweet.user.link}}">@{{tweet.user.username}}</a>
+			</div>
+			<div class="panel-body">
+				{{tweet.text|safe}}
+			</div>
+			<div class="panel-footer">
+				<span class="glyphicon glyphicon-heart"></span>{{tweet.favourites}}
+				<span class="glyphicon glyphicon-plus"></span>{{tweet.retweets}}
+			</div>
+		</div>
 		{% endfor %}
 	</ul>
 {% endblock %}

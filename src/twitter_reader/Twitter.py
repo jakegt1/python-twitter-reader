@@ -93,7 +93,7 @@ class Tweet():
             if(urls):
                 data["url"] = urls[0].get("url")
         data["retweets"] = tweet_json.get("retweet_count")
-        data["favourites"] = tweet_json.get("favourite_count")
+        data["favourites"] = tweet_json.get("favorite_count")
         data["creation_date"] = tweet_json.get("created_at")
         return data
 
