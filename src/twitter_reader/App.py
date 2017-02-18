@@ -1,6 +1,7 @@
 from twitter_reader.Config import twitter
-from twitter_reader.Twitter import TwitterAPI
+from twitter_reader.Twitter import TwitterAPI, Tweet, User
 from flask import Flask, render_template
+import pprint
 
 twitter_handler = TwitterAPI(
     twitter["consumer_key"],
@@ -22,11 +23,15 @@ get_tweets_from_user = get_tweets_from_user_closure(
     twitter["access_secret"]
 )
 
+pp = pprint.PrettyPrinter(indent=4)
+
 app = Flask(__name__)
 @app.route("/")
 def index():
     response_content = get_tweets_from_user('MaplecroftRisk')
-    statuses = response_content["statuses"]
+    statuses =response_content["statuses"]
+    tweets = [Tweet(tweet) for tweet in statuses]
+    pp.pprint(str(tweets[0]))
     statuses = [status["text"] for status in statuses]
     return render_template(
         "index.html",
