@@ -1,5 +1,12 @@
 {% extends "pre_index.html" %}
 {% block tweets %}
+	<ul>
+		{% for tweet in tweet_list %}
+		<li>
+			{{tweet.user.username}}
+		</li>
+		{% endfor %}
+	</ul>
 {% endblock %}
 {% block map %}
 {% endblock %}

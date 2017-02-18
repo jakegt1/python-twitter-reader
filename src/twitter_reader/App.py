@@ -35,6 +35,6 @@ def index():
     statuses = [status["text"] for status in statuses]
     return render_template(
         "index.html",
-        my_statuses = statuses
+        tweet_list = tweets
     )
 
