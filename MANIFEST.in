@@ -1,0 +1,2 @@
+recursive-include src/twitter_reader/templates *
+recursive-include src/twitter_reader/static *

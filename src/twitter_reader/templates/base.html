@@ -1,0 +1,21 @@
+<html>
+	<head>
+		{% block head %}
+		{% endblock %}
+		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				{% block navbar %}
+				{% endblock %}
+			</div>
+		</nav>
+		<div class="jumbotron">
+			{% block content %}
+			{% endblock %}
+		</div>
+		<script src='https://code.jquery.com/jquery-3.1.1.min.js'>
+		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+	</body>
+</html>
