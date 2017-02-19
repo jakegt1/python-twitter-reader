@@ -32,7 +32,6 @@ class TwitterAPI():
         search_url = self.format_url.format('search/tweets.json?')
         search_url += 'q=from:' + username + '&'
         search_url += 'count=' + str(limit)
-        print(search_url)
         return json.loads(self.oauth_request(search_url, key, secret).decode("utf-8"))
 
 class User():
