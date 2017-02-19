@@ -1,6 +1,7 @@
 bin/
 dist/
 build/
+src/twitter_reader/static/map-tools
 lib
 lib64
 share/
