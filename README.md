@@ -29,8 +29,9 @@ To install the python3 dependencies, whether in a virtualenv or not, do the foll
 * ```pip3 install -r requirements.txt```
 This will install all python3 dependencies required for the webapp.
 
-###Running the app
-To start the webapp, simply run ```python3 -m twitter_reader```.
+###Installing and running the app
+Install the app by running ```python3 setup.py install```.
+You can then start the web app using ```python3 -m twitter_reader```.
 
 ##Notes
 This was developed using Bash for Windows, which effectively means Ubuntu 16.04.
