@@ -2,7 +2,6 @@ from twitter_reader.Config import twitter
 from twitter_reader.Twitter import TwitterAPI, Tweet, User
 from flask import Flask, render_template
 import re
-import pprint
 
 twitter_handler = TwitterAPI(
     twitter["consumer_key"],
@@ -55,14 +54,11 @@ def make_urls_from_text(tweet_text):
         tweet_text = tweet_text.replace(match.group(0), formatted_hashtag)
     return tweet_text
 
-pp = pprint.PrettyPrinter(indent=4)
-
 app = Flask(__name__)
 @app.route("/")
 def index():
     response_content = get_tweets_from_user(twitter["username"])
-    statuses =response_content["statuses"]
-    pp.pprint(statuses[0])
+    statuses = response_content["statuses"]
     tweets = [Tweet(tweet) for tweet in statuses]
     for tweet in tweets:
         tweet.text = make_urls_from_text(tweet.text)
