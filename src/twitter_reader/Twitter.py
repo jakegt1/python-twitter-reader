@@ -79,6 +79,7 @@ class Tweet():
         self.retweets = data_dict["retweets"]
         self.favourites = data_dict["favourites"]
         self.creation_date = data_dict["creation_date"]
+        self.place = data_dict["place"]
 
     def make_tweet(self, tweet_json):
         url_format = "https://twitter.com/i/web/status/{}"
@@ -105,6 +106,15 @@ class Tweet():
         if(data["creation_date"]):
             temp_date = parse(data["creation_date"])
             data["creation_date"] = temp_date.strftime("%I:%M%p on %a %d %B, %Y")
+        data["place"] = None
+        temp_place = tweet_json.get("place")
+        if(temp_place):
+            bounding_box = temp_place.get("bounding_box")
+            if(bounding_box):
+                coords = bounding_box.get("coordinates")
+                if(coords):
+                    #Don't really need the whole box.
+                    data["place"] = coords[0][0]
         return data
 
     def to_dict(self):

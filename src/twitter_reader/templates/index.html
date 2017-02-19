@@ -14,6 +14,9 @@
 			<div class="panel-body tweet-text">
 				{{tweet.text|safe}}
 				<span id="tweet-url" class="hidden">{{tweet.url}}</span>
+				{% if tweet.place %}
+					<span id="tweet-place" class="hidden">{{tweet.place}}</span>
+				{% endif %}
 			</div>
 			<div class="panel-footer">
 				<span class="glyphicon glyphicon-heart"></span>{{tweet.favourites}}
