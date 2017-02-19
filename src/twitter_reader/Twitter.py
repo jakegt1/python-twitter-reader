@@ -4,6 +4,7 @@ from dateutil.tz import *
 import datetime
 import json
 
+
 class TwitterAPI():
     def __init__(self, consumer_key, consumer_secret):
         self.consumer_key = consumer_key
@@ -32,7 +33,13 @@ class TwitterAPI():
         search_url = self.format_url.format('search/tweets.json?')
         search_url += 'q=from:' + username + '&'
         search_url += 'count=' + str(limit)
-        return json.loads(self.oauth_request(search_url, key, secret).decode("utf-8"))
+        response = self.oauth_request(
+                search_url,
+                key,
+                secret
+        )
+        return json.loads(response.decode("utf-8"))
+
 
 class User():
     def __init__(self, user_json):
@@ -104,7 +111,8 @@ class Tweet():
         data["creation_date"] = tweet_json.get("created_at")
         if(data["creation_date"]):
             temp_date = parse(data["creation_date"])
-            data["creation_date"] = temp_date.strftime("%I:%M%p on %a %d %B, %Y")
+            date_string = temp_date.strftime("%I:%M%p on %a %d %B, %Y")
+            data["creation_date"] = date_string
         data["place"] = None
         temp_place = tweet_json.get("place")
         if(temp_place):
@@ -112,7 +120,7 @@ class Tweet():
             if(bounding_box):
                 coords = bounding_box.get("coordinates")
                 if(coords):
-                    #Don't really need the whole box.
+                    # Don't really need the whole box.
                     data["place"] = coords[0][0]
         return data
 
@@ -130,6 +138,3 @@ class Tweet():
 
     def __str__(self):
         return str(self.to_dict())
-
-
-

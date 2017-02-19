@@ -8,6 +8,8 @@ twitter_handler = TwitterAPI(
     twitter["consumer_secret"]
 )
 
+
+# Just to make it easier to get tweets from a user
 def get_tweets_from_user_closure(twitter, access_token, access_secret):
     def get_tweets_from_user(username):
         return twitter.get_tweets_from_user(
@@ -23,9 +25,10 @@ get_tweets_from_user = get_tweets_from_user_closure(
     twitter["access_secret"]
 )
 
+
 def make_urls_from_text(tweet_text):
     url = "<a href='{}'>{}</a>"
-    #Finding out good URL regex will take long!
+    # Finding out good URL regex will take long!
     regex_url = re.compile(r'http[s]?://([^\s]+)')
     all_urls = regex_url.finditer(tweet_text)
     for match in all_urls:
@@ -55,6 +58,8 @@ def make_urls_from_text(tweet_text):
     return tweet_text
 
 app = Flask(__name__)
+
+
 @app.route("/")
 def index():
     response_content = get_tweets_from_user(twitter["username"])
@@ -64,6 +69,5 @@ def index():
         tweet.text = make_urls_from_text(tweet.text)
     return render_template(
         "index.html",
-        tweet_list = tweets
+        tweet_list=tweets
     )
-
