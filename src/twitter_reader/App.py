@@ -15,7 +15,6 @@ def get_tweets_from_user_closure(twitter, access_token, access_secret):
             username,
             access_token,
             access_secret,
-            20
         )
     return get_tweets_from_user
 
@@ -25,9 +24,17 @@ get_tweets_from_user = get_tweets_from_user_closure(
     twitter["access_secret"]
 )
 
-pp = pprint.PrettyPrinter(indent=4)
-
 def make_urls_from_text(tweet_text):
+    url = "<a href='{}'>{}</a>"
+    #Finding out good URL regex will take long!
+    regex_url = re.compile(r'http[s]?://([^\s]+)')
+    all_urls = regex_url.finditer(tweet_text)
+    for match in all_urls:
+        formatted_url = url.format(
+            match.group(0),
+            match.group(0)
+        )
+        tweet_text = tweet_text.replace(match.group(0), formatted_url)
     at_mention = "<a href='https://twitter.com/{}'>@{}</a>"
     regex_at_mentions = re.compile(r'@([\w]+)')
     all_at_mentions = regex_at_mentions.finditer(tweet_text)
@@ -48,17 +55,17 @@ def make_urls_from_text(tweet_text):
         tweet_text = tweet_text.replace(match.group(0), formatted_hashtag)
     return tweet_text
 
-
+pp = pprint.PrettyPrinter(indent=4)
 
 app = Flask(__name__)
 @app.route("/")
 def index():
     response_content = get_tweets_from_user('MaplecroftRisk')
     statuses =response_content["statuses"]
+    pp.pprint(statuses)
     tweets = [Tweet(tweet) for tweet in statuses]
     for tweet in tweets:
         tweet.text = make_urls_from_text(tweet.text)
-    statuses = [status["text"] for status in statuses]
     return render_template(
         "index.html",
         tweet_list = tweets

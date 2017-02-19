@@ -1,4 +1,7 @@
 from oauth2 import Consumer, Token, Client
+from dateutil.parser import parse
+from dateutil.tz import *
+import datetime
 import json
 
 class TwitterAPI():
@@ -65,6 +68,9 @@ class User():
 
 class Tweet():
     def __init__(self, tweet_json):
+        self.retweet = tweet_json.get("retweeted_status")
+        if(self.retweet):
+            tweet_json = tweet_json["retweeted_status"]
         data_dict = self.make_tweet(tweet_json)
         self.user = data_dict["user"]
         self.text = data_dict["text"]
@@ -75,10 +81,14 @@ class Tweet():
         self.creation_date = data_dict["creation_date"]
 
     def make_tweet(self, tweet_json):
+        url_format = "https://twitter.com/i/web/status/{}"
         data = {}
         data["user"] = User(tweet_json.get("user"))
         data["text"] = tweet_json.get("text")
         data["url"] = None
+        temp_url = tweet_json.get("id_str")
+        if(temp_url):
+            data["url"] = url_format.format(temp_url)
         data["hashtags"] = None
         entities = tweet_json.get("entities")
         if(entities):
@@ -89,12 +99,12 @@ class Tweet():
                     for hashtag in
                     hashtags
                 ]
-            urls = entities.get("urls")
-            if(urls):
-                data["url"] = urls[0].get("url")
         data["retweets"] = tweet_json.get("retweet_count")
         data["favourites"] = tweet_json.get("favorite_count")
         data["creation_date"] = tweet_json.get("created_at")
+        if(data["creation_date"]):
+            temp_date = parse(data["creation_date"])
+            data["creation_date"] = temp_date.strftime("%I:%M%p on %a %d %B, %Y")
         return data
 
     def to_dict(self):
