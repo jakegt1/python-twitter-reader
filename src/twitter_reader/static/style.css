@@ -1,4 +1,9 @@
 .tweet-text:hover {
-	background-color: #BBBBBB;
+	background-color: #CCCCCC;
+	cursor: pointer;
+}
+
+.tweet-header:hover {
+	background-color: #999999;
 	cursor: pointer;
 }

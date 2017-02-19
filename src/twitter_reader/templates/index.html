@@ -2,8 +2,8 @@
 {% block tweets %}
 	<ul class="list-group" id="tweets">
 		{% for tweet in tweet_list %}
-		<div class="list-group-item panel panel-default" id="tweet{{loop.index}}">
-			<div class="panel-heading">
+		<div class="list-group-item panel panel-default">
+			<div class="panel-heading tweet-header" id="tweet{{loop.index}}">
 				<img src="{{tweet.user.profile_image}}"/>
 				{{tweet.user.name}} <a href="{{tweet.user.link}}">@{{tweet.user.username}}</a>
 				{{tweet.creation_date}}
