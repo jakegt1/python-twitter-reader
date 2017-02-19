@@ -60,9 +60,9 @@ pp = pprint.PrettyPrinter(indent=4)
 app = Flask(__name__)
 @app.route("/")
 def index():
-    response_content = get_tweets_from_user('MaplecroftRisk')
+    response_content = get_tweets_from_user(twitter["username"])
     statuses =response_content["statuses"]
-    pp.pprint(statuses)
+    pp.pprint(statuses[0])
     tweets = [Tweet(tweet) for tweet in statuses]
     for tweet in tweets:
         tweet.text = make_urls_from_text(tweet.text)
